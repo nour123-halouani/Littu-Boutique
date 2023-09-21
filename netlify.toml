@@ -1,3 +1,11 @@
 [build]
 command = "npm run build"
 publish = "out"
+
+[build.environment]
+PRODUCT_POSTGRES_URL=postgres://postgres:postgres@localhost:5432/medusa
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+  [plugins.inputs]
+    target = "es2017"
