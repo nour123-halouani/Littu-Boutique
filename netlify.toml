@@ -2,12 +2,5 @@
 command = "npm run build"
 publish = "out"
 
-[build.environment]
-DB_HOST = "localhost"
-DB_PORT = "5432"
-DB_USER = "postgres"
-DB_PASSWORD = "123456789"
-DB_NAME = "medusa_DB"
-
 [[plugins]]
   package = "@netlify/plugin-nextjs"
