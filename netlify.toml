@@ -11,5 +11,3 @@ DB_NAME = "medusa_DB"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  [plugins.inputs]
-    target = "es2017"
