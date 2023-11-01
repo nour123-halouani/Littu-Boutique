@@ -7,7 +7,7 @@ type ButtonProps = {
   variant?: "primary" | "secondary"
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button = ({
+const ButtonBlack = ({
   children,
   className,
   isLoading = false,
@@ -18,11 +18,11 @@ const Button = ({
     <button
       {...props}
       className={clsx(
-        "w-full uppercase flex items-center justify-center min-h-[50px] px-5 py-[10px] text-small-regular border transition-colors duration-200 disabled:opacity-50",
+        "uppercase flex items-center justify-center min-h-[40px] px-6 py-[10px] text-small-regular border transition-colors duration-200 disabled:opacity-50 font-light",
         {
-          "text-white bg-gray-900 border-gray-900 hover:bg-white hover:text-gray-900 disabled:hover:bg-gray-900 disabled:hover:text-white":
+          "text-white bg-theme-dark border-theme-dark hover:bg-white hover:text-theme-dark disabled:hover:bg-theme-dark disabled:hover:text-white":
             variant === "primary",
-          "text-gray-900 bg-transparent border-gray-920 hover:bg-gray-100":
+          "text-theme-dark bg-transparent border-icons-dark hover:bg-icons-light":
             variant === "secondary",
         },
         className
@@ -33,4 +33,4 @@ const Button = ({
   )
 }
 
-export default Button
+export default ButtonBlack

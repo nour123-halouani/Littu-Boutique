@@ -2,7 +2,7 @@ import { Popover, Transition } from "@headlessui/react"
 import { useCartDropdown } from "@lib/context/cart-dropdown-context"
 import { useStore } from "@lib/context/store-context"
 import useEnrichedLineItems from "@lib/hooks/use-enrich-line-items"
-import Button from "@modules/common/components/button"
+import Button from "@modules/common/components/button-black"
 import LineItemOptions from "@modules/common/components/line-item-options"
 import LineItemPrice from "@modules/common/components/line-item-price"
 import Trash from "@modules/common/icons/trash"
@@ -21,7 +21,10 @@ const CartDropdown = () => {
     <div className="h-full z-50" onMouseEnter={open} onMouseLeave={close}>
       <Popover className="relative h-full">
         <Popover.Button className="h-full">
-          <Link href="/cart">{`My Bag (${totalItems})`}</Link>
+          <Link
+            className="uppercase tracking-[1.4px]"
+            href="/cart"
+          >{`Cart (${totalItems})`}</Link>
         </Popover.Button>
         <Transition
           show={state}

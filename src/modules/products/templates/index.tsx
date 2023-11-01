@@ -1,5 +1,4 @@
 "use client"
-
 import { ProductProvider } from "@lib/context/product-context"
 import { useIntersection } from "@lib/hooks/use-in-view"
 import ProductTabs from "@modules/products/components/product-tabs"
@@ -9,6 +8,7 @@ import React, { useRef } from "react"
 import ImageGallery from "../components/image-gallary"
 import MobileActions from "../components/mobile-actions"
 import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
+import Breadcrumbs from "@modules/common/components/breadcrumbs"
 
 type ProductTemplateProps = {
   product: PricedProduct
@@ -16,12 +16,12 @@ type ProductTemplateProps = {
 
 const ProductTemplate: React.FC<ProductTemplateProps> = ({ product }) => {
   const info = useRef<HTMLDivElement>(null)
-
   const inView = useIntersection(info, "0px")
 
   return (
     <ProductProvider product={product}>
-      <div className="content-container flex flex-col small:flex-row small:items-start py-6 relative">
+      <Breadcrumbs path={"Products / " + product.title} />
+      <div className="content-container grid grid-cols-2 small:flex-row small:items-start py-6 relative">
         <div className="flex flex-col gap-y-8 w-full">
           <ImageGallery images={product?.images || []} />
         </div>

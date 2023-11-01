@@ -1,5 +1,5 @@
 import { Cart } from "@medusajs/medusa"
-import Button from "@modules/common/components/button"
+import Button from "@modules/common/components/button-black"
 import CartTotals from "@modules/common/components/cart-totals"
 import Link from "next/link"
 

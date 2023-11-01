@@ -1,4 +1,4 @@
-import Button from "@modules/common/components/button"
+import Button from "@modules/common/components/button-black"
 import Link from "next/link"
 
 const SignInPrompt = () => {

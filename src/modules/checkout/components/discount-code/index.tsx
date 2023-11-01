@@ -1,6 +1,6 @@
 import { medusaClient } from "@lib/config"
 import { Cart } from "@medusajs/medusa"
-import Button from "@modules/common/components/button"
+import Button from "@modules/common/components/button-black"
 import Input from "@modules/common/components/input"
 import Trash from "@modules/common/icons/trash"
 import { formatAmount, useCart, useUpdateCart } from "medusa-react"

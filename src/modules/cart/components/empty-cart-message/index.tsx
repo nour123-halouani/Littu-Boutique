@@ -1,4 +1,4 @@
-import UnderlineLink from "@modules/common/components/underline-link"
+// import UnderlineLink from "@modules/common/components/underline-link"
 
 const EmptyCartMessage = () => {
   return (
@@ -9,7 +9,7 @@ const EmptyCartMessage = () => {
         the link below to start browsing our products.
       </p>
       <div>
-        <UnderlineLink href="/store">Explore products</UnderlineLink>
+        {/* <UnderlineLink href="/store">Explore products</UnderlineLink> */}
       </div>
     </div>
   )

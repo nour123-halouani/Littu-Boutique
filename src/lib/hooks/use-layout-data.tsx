@@ -54,7 +54,7 @@ const fetchFeaturedProducts = async (
   const products: PricedProduct[] = await getProductsList({
     pageParam: 4,
     queryParams: {
-      limit: 4,
+      limit: 8,
       cart_id: cartId,
       region_id: region.id,
     },
@@ -121,5 +121,5 @@ export const useFeaturedProductsQuery = () => {
     }
   )
 
-  return queryResults
+  return queryResults 
 }
