@@ -1,6 +1,6 @@
 import { medusaClient } from "@lib/config"
 import { LOGIN_VIEW, useAccount } from "@lib/context/account-context"
-import Button from "@modules/common/components/button"
+import ButtonBlack from "@modules/common/components/button-black"
 import Input from "@modules/common/components/input"
 import Spinner from "@modules/common/icons/spinner"
 import Link from "next/link"
@@ -22,8 +22,8 @@ const Register = () => {
   const [authError, setAuthError] = useState<string | undefined>(undefined)
   const router = useRouter()
 
-  const handleError = (e: Error) => {
-    setAuthError("An error occured. Please try again.")
+  const handleError = (e: string) => {
+    setAuthError(e)
   }
 
   const {
@@ -35,70 +35,104 @@ const Register = () => {
   const onSubmit = handleSubmit(async (credentials) => {
     await medusaClient.customers
       .create(credentials)
-      .then(() => {
+      .then((res) => {
         refetchCustomer()
         router.push("/account")
       })
-      .catch(handleError)
+      .catch((error) => {
+        if (error.response) {
+          const networkErrorMessage = error.response.data.message
+          handleError(networkErrorMessage)
+        } else if (error.request) {
+          handleError("No response received from the serve 2")
+        } else {
+          handleError(error.message)
+        }
+      })
   })
 
   return (
-    <div className="max-w-sm flex flex-col items-center mt-12">
+    <div className="max-w-xl w-full flex flex-col items-center">
       {isSubmitting && (
         <div className="z-10 fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center">
           <Spinner size={24} />
         </div>
       )}
-      <h1 className="text-large-semi uppercase mb-6">Become a Acme Member</h1>
-      <p className="text-center text-base-regular text-gray-700 mb-4">
-        Create your Acme Member profile, and get access to an enhanced shopping
-        experience.
-      </p>
-      <form className="w-full flex flex-col" onSubmit={onSubmit}>
-        <div className="flex flex-col w-full gap-y-2">
-          <Input
-            label="First name"
-            {...register("first_name", { required: "First name is required" })}
-            autoComplete="given-name"
-            errors={errors}
-          />
-          <Input
-            label="Last name"
-            {...register("last_name", { required: "Last name is required" })}
-            autoComplete="family-name"
-            errors={errors}
-          />
-          <Input
-            label="Email"
-            {...register("email", { required: "Email is required" })}
-            autoComplete="email"
-            errors={errors}
-          />
-          <Input
-            label="Phone"
-            {...register("phone")}
-            autoComplete="tel"
-            errors={errors}
-          />
-          <Input
-            label="Password"
-            {...register("password", {
-              required: "Password is required",
-            })}
-            type="password"
-            autoComplete="new-password"
-            errors={errors}
-          />
+      <h4 className="text-theme-dark xsmall:text-[26px] text-[20px] uppercase tracking-[1.36px] self-start xsmall:pb-[22px] pb-[20px]	">
+        sign-up
+      </h4>
+      <form className="w-full" onSubmit={onSubmit}>
+        <div className="flex flex-col w-full gap-[17px]">
+          <div>
+            <label className="text-theme-dark font-light tracking-[0.18px] text-[13px] xsmall:text-[15px]">
+              First Name
+            </label>
+            <Input
+              label="First name"
+              {...register("first_name", {
+                required: "First name is required",
+              })}
+              autoComplete="given-name"
+              errors={errors}
+            />
+          </div>
+          <div>
+            <label className="text-theme-dark font-light tracking-[0.18px] text-[13px] xsmall:text-[15px]">
+              Last Name
+            </label>
+            <Input
+              label="Last name"
+              {...register("last_name", { required: "Last name is required" })}
+              autoComplete="family-name"
+              errors={errors}
+            />
+          </div>
+          <div>
+            <label className="text-theme-dark font-light tracking-[0.18px] text-[13px] xsmall:text-[15px]">
+              Email
+            </label>
+            <Input
+              label="Email"
+              {...register("email", { required: "Email is required" })}
+              autoComplete="email"
+              errors={errors}
+            />
+          </div>
+          <div>
+            <label className="text-theme-dark font-light tracking-[0.18px] text-[13px] xsmall:text-[15px]">
+              Phone
+            </label>
+            <Input
+              label="Phone"
+              {...register("phone")}
+              autoComplete="tel"
+              errors={errors}
+            />
+          </div>
+          <div>
+            <label className="text-theme-dark font-light tracking-[0.18px] text-[13px] xsmall:text-[15px]">
+              Password
+            </label>
+            <Input
+              label="Password"
+              {...register("password", {
+                required: "Password is required",
+              })}
+              type="password"
+              autoComplete="new-password"
+              errors={errors}
+            />
+          </div>
         </div>
         {authError && (
           <div>
             <span className="text-rose-500 w-full text-small-regular">
-              These credentials do not match our records
+              {authError}
             </span>
           </div>
         )}
-        <span className="text-center text-gray-700 text-small-regular mt-6">
-          By creating an account, you agree to Acme&apos;s{" "}
+        <div className="self-start text-theme-dark font-light xsmall:text-[14px] text-[12px] mt-4">
+          By creating an account, you agree to Littu Boutique&apos;s{" "}
           <Link href="/content/privacy-policy" className="underline">
             Privacy Policy
           </Link>{" "}
@@ -107,18 +141,21 @@ const Register = () => {
             Terms of Use
           </Link>
           .
-        </span>
-        <Button className="mt-6">Join</Button>
+        </div>
+
+        <ButtonBlack className="mt-6">Prihlásiť Se</ButtonBlack>
       </form>
-      <span className="text-center text-gray-700 text-small-regular mt-6">
-        Already a member?{" "}
-        <button
-          onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN)}
-          className="underline"
-        >
-          Sign in
-        </button>
-        .
+      <span className="self-start text-theme-dark font-light xsmall:text-[14px] text-[12px] mt-6">
+        <div>
+          Already a member?
+          <button
+            onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN)}
+            className="underline font-medium ml-1"
+          >
+            Sign up
+          </button>
+          .
+        </div>
       </span>
     </div>
   )

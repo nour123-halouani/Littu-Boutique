@@ -1,6 +1,6 @@
 "use client"
 
-import Button from "@modules/common/components/button"
+import Button from "@modules/common/components/button-black"
 import Spinner from "@modules/common/icons/spinner"
 import { useCustomerOrders } from "medusa-react"
 import Link from "next/link"

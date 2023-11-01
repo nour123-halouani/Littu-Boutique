@@ -17,10 +17,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${product.title} | Acme Store`,
+    title: `${product.title} | Littu Boutique`,
     description: `${product.title}`,
     openGraph: {
-      title: `${product.title} | Acme Store`,
+      title: `${product.title} | Littu Boutique`,
       description: `${product.title}`,
       images: product.thumbnail ? [product.thumbnail] : [],
     },
@@ -31,6 +31,7 @@ export default async function CollectionPage({ params }: Props) {
   const { products } = await getProductByHandle(params.handle).catch((err) => {
     notFound()
   })
+  console.log("product 1", products, products[0])
 
   return <ProductTemplate product={products[0]} />
 }

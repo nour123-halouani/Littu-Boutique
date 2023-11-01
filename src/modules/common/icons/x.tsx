@@ -8,26 +8,16 @@ const X: React.FC<IconProps> = ({
 }) => {
   return (
     <svg
-      width={size}
-      height={size}
-      viewBox="0 0 20 20"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      width="35"
+      height="35"
+      viewBox="0 0 35 35"
+      fill="none"
       {...attributes}
     >
       <path
-        d="M15 5L5 15"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M5 5L15 15"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M7.89617 6.32287L6.32227 7.89678L15.9287 17.4999L6.32227 27.1041L7.89727 28.678L17.5004 19.0716L27.1046 28.6769L28.6774 27.1041L19.0721 17.4999L28.6774 7.89568L27.1035 6.32178L17.5004 15.9282L7.89617 6.32287Z"
+        fill="#232323"
       />
     </svg>
   )

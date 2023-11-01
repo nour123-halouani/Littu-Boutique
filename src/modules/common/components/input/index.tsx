@@ -13,10 +13,14 @@ type InputProps = Omit<
   errors?: Record<string, unknown>
   touched?: Record<string, unknown>
   name: string
+  placeholder?: string
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ type, name, label, errors, touched, required, ...props }, ref) => {
+  (
+    { type, name, label, placeholder, errors, touched, required, ...props },
+    ref
+  ) => {
     const inputRef = React.useRef<HTMLInputElement>(null)
     const [showPassword, setShowPassword] = useState(false)
     const [inputType, setInputType] = useState(type)
@@ -41,9 +45,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <input
             type={inputType}
             name={name}
-            placeholder=" "
+            placeholder={placeholder}
             className={clsx(
-              "pt-4 pb-1 block w-full px-4 mt-0 bg-transparent border appearance-none focus:outline-none focus:ring-0 focus:border-gray-400 border-gray-200",
+              "px-2 py-2.5 block w-full mt-0 bg-transparent font-light border appearance-none focus:outline-none focus:ring-0 focus:border-theme border-theme-dark",
               {
                 "border-rose-500 focus:border-rose-500": hasError,
               }
@@ -51,7 +55,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {...props}
             ref={inputRef}
           />
-          <label
+          {/* <label
             htmlFor={name}
             onClick={() => inputRef.current?.focus()}
             className={clsx(
@@ -63,7 +67,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           >
             {label}
             {required && <span className="text-rose-500">*</span>}
-          </label>
+          </label> */}
           {type === "password" && (
             <button
               type="button"

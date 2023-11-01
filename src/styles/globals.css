@@ -1,9 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: "Nohemi";
+  src: url("../../public/fonts/Nohemi-VF-BF6438cc58ad63d.ttf");
+}
+
+* {
+  font-family: "Nohemi" !important;
+}
 
 @layer utilities {
-  /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -13,13 +20,13 @@
   }
 
   .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   input:focus ~ label,
   input:not(:placeholder-shown) ~ label {
-    @apply -translate-y-2 text-xsmall-regular; 
+    @apply -translate-y-2 text-xsmall-regular;
   }
 
   input:focus ~ label {
@@ -51,7 +58,15 @@
 
 @layer components {
   .content-container {
-    @apply max-w-[1440px] w-full mx-auto px-8
+    @apply w-full mx-auto px-44;
+  }
+
+  .content-container-tablet {
+    @apply w-full mx-auto px-28;
+  }
+
+  .content-container-mobile {
+    @apply w-full mx-auto px-4;
   }
 
   .contrast-btn {

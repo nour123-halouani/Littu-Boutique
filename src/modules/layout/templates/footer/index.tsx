@@ -1,13 +1,13 @@
-import FooterCTA from "@modules/layout/components/footer-cta"
+import FooterCopyright from "@modules/layout/components/footer-copyright"
 import FooterNav from "@modules/layout/components/footer-nav"
-import MedusaCTA from "@modules/layout/components/medusa-cta"
+import Instafeed from "@modules/layout/components/insta-feed"
 
 const Footer = () => {
   return (
     <footer>
-      <FooterCTA />
+      <Instafeed />
       <FooterNav />
-      <MedusaCTA />
+      <FooterCopyright />
     </footer>
   )
 }

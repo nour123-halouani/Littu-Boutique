@@ -8,32 +8,42 @@ module.exports = {
   theme: {
     extend: {
       transitionProperty: {
-        "width": "width",
-        "spacing": 'margin, padding',
+        width: "width",
+        spacing: "margin, padding",
       },
       maxWidth: {
         "8xl": "100rem",
       },
       screens: {
-        "2xsmall": "320px",
-        "xsmall": "512px",
-        "small": "1024px",
-        "medium": "1280px",
-        "large": "1440px",
-        "xlarge": "1680px",
+        xxsmall: "380px",
+        xsmall: "512px",
+        uxsmall: "768px",
+        small: "1024px",
+        medium: "1280px",
+        large: "1440px",
+        xlarge: "1680px",
         "2xlarge": "1920px",
       },
-      fontFamily: {
-        sans: [
-          "Inter",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Roboto",
-          "Helvetica Neue",
-          "Ubuntu",
-          "sans-serif",
-        ],
+      colors: {
+        theme: {
+          light: "#F4EADF",
+          DEFAULT: "#D3B9A2",
+          dark: "#232323",
+        },
+        bg: {
+          light: "#FFF",
+          DEFAULT: "#F1F1F0",
+          dark: "#EBEBEA",
+        },
+        typography: {
+          light: "#9C9C9C",
+          DEFAULT: "#303030",
+          dark: "#111111",
+        },
+        icons: {
+          light: "#BFBFBF",
+          dark: "#A8A9A5",
+        },
       },
     },
   },
