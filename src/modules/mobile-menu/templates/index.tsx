@@ -3,6 +3,7 @@ import Container from "../components/container"
 import FooterMenu from "../components/footer-menu"
 
 const MobileMenu = () => {
+
   return (
     <Container>
       <CategoriesList />

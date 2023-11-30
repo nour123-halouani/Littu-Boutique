@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { IconProps } from "types/icon"
 
 const LogoFacebook: React.FC<IconProps> = ({
-  size = "16",
+  size = "11",
   color = "currentColor",
   ...attributes
 }) => {
@@ -20,7 +20,7 @@ const LogoFacebook: React.FC<IconProps> = ({
 
   return (
     <svg
-      width="11"
+      width={size}
       height="20"
       viewBox="0 0 11 20"
       fill="none"

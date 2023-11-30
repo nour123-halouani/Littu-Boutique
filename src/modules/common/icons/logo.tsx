@@ -1,4 +1,5 @@
-import React from "react"
+'use client'
+import React, { useEffect, useState } from "react"
 import { IconProps } from "types/icon"
 
 const Logo: React.FC<IconProps> = ({
@@ -6,7 +7,21 @@ const Logo: React.FC<IconProps> = ({
   color = "currentColor",
   ...attributes
 }) => {
-  const isViewportUnder1024px = window?.innerWidth <= 1024;
+  const [isViewportUnder1024px, setIsViewportUnder1024px] = useState(false);
+
+  useEffect(() => {
+    const checkViewportWidth = () => {
+      setIsViewportUnder1024px(window.innerWidth <= 1024);
+    };
+    checkViewportWidth();
+
+    window.addEventListener("resize", checkViewportWidth);
+
+    return () => {
+      window.removeEventListener("resize", checkViewportWidth);
+    };
+  }, []);
+
   const svgColor = isViewportUnder1024px ? "black" : color;
 
   return (

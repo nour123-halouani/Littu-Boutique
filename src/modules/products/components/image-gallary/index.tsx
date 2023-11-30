@@ -1,6 +1,5 @@
 import { Image as MedusaImage } from "@medusajs/medusa"
-import Image from "next/image"
-import { MutableRefObject } from "react"
+import { MutableRefObject, useState } from "react"
 import {
   useKeenSlider,
   KeenSliderPlugin,
@@ -8,8 +7,13 @@ import {
 } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 
+type ImageGalleryProps = {
+  images: MedusaImage[]
+}
+
 function ThumbnailPlugin(
-  mainRef: MutableRefObject<KeenSliderInstance | null>
+  mainRef: MutableRefObject<KeenSliderInstance | null>,
+  setSelectedImageIndex: React.Dispatch<React.SetStateAction<number>>
 ): KeenSliderPlugin {
   return (slider) => {
     function removeActive() {
@@ -17,6 +21,7 @@ function ThumbnailPlugin(
         slide.classList.remove("active")
       })
     }
+
     function addActive(idx: number) {
       slider.slides[idx].classList.add("active")
     }
@@ -25,6 +30,7 @@ function ThumbnailPlugin(
       slider.slides.forEach((slide, idx) => {
         slide.addEventListener("click", () => {
           if (mainRef.current) mainRef.current.moveToIdx(idx)
+          setSelectedImageIndex(idx)
         })
       })
     }
@@ -38,16 +44,15 @@ function ThumbnailPlugin(
         const next = main.animator.targetIdx || 0
         addActive(main.track.absToRel(next))
         slider.moveToIdx(Math.min(slider.track.details.maxIdx, next))
+        setSelectedImageIndex(next)
       })
     })
   }
 }
 
-type ImageGalleryProps = {
-  images: MedusaImage[]
-}
-
 const ImageGallery = ({ images }: ImageGalleryProps) => {
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     initial: 0,
   })
@@ -55,44 +60,39 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
     {
       initial: 0,
       slides: {
-        perView: 4,
+        perView: 4.5,
         spacing: 10,
       },
+      vertical: true,
     },
-    [ThumbnailPlugin(instanceRef)]
+    [ThumbnailPlugin(instanceRef, setSelectedImageIndex)]
   )
 
   return (
-    <div className="max-w-[100%] flex flex-row-reverse">
-      <div ref={sliderRef} className="keen-slider">
+    <div className="hidden small:grid grid-row-reverse small:h-[85vh] medium:max-h-[600px] small:max-h-[500px] grid-cols-10 gap-2">
+      <div ref={sliderRef} className="keen-slider order-2 col-span-8">
         {images.map((img, index) => (
-          <div
-            key={index}
-            className="keen-slider__slide text-3xl mt-10 h-100 cursor-pointer"
-          >
-            <Image
-              src={img.url}
-              className=""
-              alt="Thumbnail"
-              height={200}
-              width={400}
-            />
+          <div key={index} className="keen-slider__slide cursor-pointer">
+            <img src={img.url} alt="Thumbnail" className="w-full h-[100%]" />
           </div>
         ))}
       </div>
-
-      <div ref={thumbnailRef} className="keen-slider flex">
+      <div ref={thumbnailRef} className="keen-slider order-1 col-span-2 px-1">
         {images.map((img, index) => (
           <div
             key={index}
-            className="keen-slider__slide cursor-pointer"
+            className={`keen-slider__slide cursor-pointer ${
+              selectedImageIndex === index ? "active" : ""
+            }`}
           >
-            <Image
+            <img
               src={img.url}
-              className=""
               alt="Thumbnail"
-              height={200}
-              width={200}
+              className={`object-center w-full h-full ${
+                selectedImageIndex === index
+                  ? "border-[1.5px] border-solid border-theme-dark"
+                  : ""
+              }`}
             />
           </div>
         ))}

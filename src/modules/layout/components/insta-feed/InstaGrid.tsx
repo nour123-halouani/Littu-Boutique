@@ -10,10 +10,6 @@ interface InstaGridProps {
 }
 
 const InstaGrid = ({ items }: InstaGridProps) => {
-  if (items?.length === 0) {
-    return <SkeletonInstaFeed />
-  }
-
   const [ref] = useKeenSlider<HTMLDivElement>({
     breakpoints: {
       "(max-width: 520px)": {
@@ -28,6 +24,11 @@ const InstaGrid = ({ items }: InstaGridProps) => {
     },
     slides: { perView: 1.5 },
   })
+
+  if (items?.length === 0) {
+    return <SkeletonInstaFeed refSk={ref} />
+  }
+
   return (
     <>
       <div className="small:grid grid-cols-6 gap-3 hidden">

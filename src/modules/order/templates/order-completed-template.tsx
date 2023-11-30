@@ -24,29 +24,24 @@ const OrderCompletedTemplate: React.FC<OrderCompletedTemplateProps> = ({
   }, [])
 
   return (
-    <div className="bg-gray-50 py-6 min-h-[calc(100vh-64px)]">
-      <div className="content-container flex flex-col justify-center items-center">
+      <div className="small:content-container content-container-mobile medium:content-container flex flex-col justify-center items-center">
         {isOnboarding && <OnboardingCta orderId={order.id} />}
-        <div className="max-w-4xl h-full bg-white w-full">
+        <div className="max-w-4xl h-full bg-white w-full border-[1px] border-gray-200 p-4 my-12">
           <OrderDetails order={order} />
           <Items
             items={order.items}
             region={order.region}
             cartId={order.cart_id}
           />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-10 border-b border-gray-200">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-10 ">
             <ShippingDetails
               shippingMethods={order.shipping_methods}
               address={order.shipping_address}
             />
             <OrderSummary order={order} />
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-10">
-            <Help />
-          </div>
         </div>
       </div>
-    </div>
   )
 }
 

@@ -1,5 +1,7 @@
 "use client"
 import AngleDown from "@modules/common/icons/angle-down"
+import { useCart } from "medusa-react"
+import Link from "next/link"
 import { useState } from "react"
 
 const CategoriesList = () => {
@@ -10,6 +12,10 @@ const CategoriesList = () => {
     updatedOpen[index] = !updatedOpen[index]
     setOpen(updatedOpen)
   }
+  const { cart, totalItems } = useCart()
+  const storedArrayString = localStorage.getItem("wishlist")
+  let storedArray = JSON.parse(storedArrayString ? storedArrayString : "")
+  const arrayLength = storedArray.length
 
   return (
     <div className="min-w-full px-5 pt-5 pb-24 max-w-xs bg-white">
@@ -44,6 +50,17 @@ const CategoriesList = () => {
             )}
           </li>
         ))}
+        <li className="bg-theme-light flex flex-col p-3 mt-5 gap-5">
+          <Link className="uppercase text-[12px] font-light tracking-[1.4px] cursor-pointer" href="/cart">
+            {`Cart (${totalItems})`}
+          </Link>
+          <Link
+            href="/wishlist"
+            className="uppercase text-[12px] font-light tracking-[1.4px] cursor-pointer"
+          >
+            Wishlist ({arrayLength})
+          </Link>
+        </li>
       </ul>
     </div>
   )

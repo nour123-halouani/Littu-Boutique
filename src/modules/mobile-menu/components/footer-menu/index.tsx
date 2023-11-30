@@ -5,6 +5,7 @@ import Link from "next/link"
 const FooterMenu = () => {
   return (
     <div className="flex flex-col w-full items-center fixed bg-white bottom-0 h-20 mt-8 gap-2">
+      
       <div className="flex flex-row items-center gap-5">
         <Link href="/fb">
           <LogoFacebook />

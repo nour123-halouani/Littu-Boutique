@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
-import InstaGrid from "./InstaGrid"
+import InstaGrid from "./instaGrid"
 
 export interface Instaltem {
   permalink: string
@@ -12,37 +12,56 @@ const Instafeed = () => {
   const userId = process.env.NEXT_PUBLIC_ACCESS_USER_ID
   const accessToken = process.env.NEXT_PUBLIC_ACCESS_INSTA_CODE
   const instaUrl = `https://graph.instagram.com/${userId}/media?access_token=${accessToken}`
-
   useEffect(() => {
     const fetchMedia = async (id: string) => {
       const mediaUrl = `https://graph.instagram.com/${id}?access_token=${accessToken}&fields=media_url,permalink`
 
-      const res = await fetch(mediaUrl)
-      const json = await res.json()
+      try {
+        const res = await fetch(mediaUrl)
+        if (!res.ok) {
+          throw new Error(`Failed to fetch media for ID ${id}`)
+        }
 
-      const instaltem: Instaltem = {
-        permalink: json.permalink,
-        mediaUrl: json.media_url,
+        const json = await res.json()
+
+        const instaltem: Instaltem = {
+          permalink: json.permalink,
+          mediaUrl: json.media_url,
+        }
+        return instaltem
+      } catch (error) {
+        console.error("Error fetching media:", error)
+        throw error // Rethrow the error to propagate it to the caller
       }
-      return instaltem
     }
+
     const doFetch = async () => {
       if (!userId || !accessToken) {
         return
       }
 
-      const res = await fetch(instaUrl)
-      const json = (await res.json()).data
-      const fetchedItems: Instaltem[] = []
+      try {
+        const res = await fetch(instaUrl)
+        if (!res.ok) {
+          throw new Error("Failed to fetch Instagram data")
+        }
 
-      for (let i = 0; i < json?.length && i < 6; i++) {
-        const item = json[i]
-        const itemId = item.id
-        const instaltem = await fetchMedia(itemId)
-        fetchedItems.push(instaltem)
+        const json = (await res.json()).data
+        const fetchedItems: Instaltem[] = []
+
+        for (let i = 0; i < json?.length && i < 6; i++) {
+          const item = json[i]
+          const itemId = item.id
+          const instaltem = await fetchMedia(itemId)
+          fetchedItems.push(instaltem)
+        }
+
+        setInstaItems(fetchedItems)
+      } catch (error) {
+        console.error("Error fetching Instagram data:", error)
       }
-      setInstaItems(fetchedItems)
     }
+
     doFetch()
   }, [userId, accessToken, instaUrl])
 

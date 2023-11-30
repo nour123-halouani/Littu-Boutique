@@ -1,6 +1,7 @@
 import { medusaClient } from "@lib/config"
 import { useAccount } from "@lib/context/account-context"
 import useToggleState from "@lib/hooks/use-toggle-state"
+import { phoneRegex } from "@lib/util/regex"
 import { Address } from "@medusajs/medusa"
 import CountrySelect from "@modules/checkout/components/country-select"
 import Button from "@modules/common/components/button-black"
@@ -9,6 +10,7 @@ import Modal from "@modules/common/components/modal"
 import Edit from "@modules/common/icons/edit"
 import Spinner from "@modules/common/icons/spinner"
 import Trash from "@modules/common/icons/trash"
+import X from "@modules/common/icons/x"
 import clsx from "clsx"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -106,52 +108,45 @@ const EditAddress: React.FC<EditAddressProps> = ({
           }
         )}
       >
-        <div className="flex flex-col">
-          <span className="text-left text-base-semi">
-            {address.first_name} {address.last_name}
-          </span>
-          {address.company && (
-            <span className="text-small-regular text-gray-700">
-              {address.company}
-            </span>
-          )}
-          <div className="flex flex-col text-left text-base-regular mt-2">
+        <div className="flex flex-row justify-between items-start">
+          <div className="flex flex-col">
             <span>
-              {address.address_1}
-              {address.address_2 && <span>, {address.address_2}</span>}
+              {address.first_name} {address.last_name}
             </span>
-            <span>
-              {address.postal_code}, {address.city}
-            </span>
-            <span>
-              {address.province && `${address.province}, `}
-              {address.country_code?.toUpperCase()}
-            </span>
+            {address.phone && (
+              <span className="text-small-regular text-gray-700">
+                {address.phone}
+              </span>
+            )}
+            <div className="flex flex-col text-left text-base-regular mt-2">
+              <span>
+                {address.address_1}
+                {address.address_2 && <span>, {address.address_2}</span>}
+              </span>
+              <span>
+                {address.postal_code}, {address.city}
+              </span>
+              <span>
+                {address.province && `${address.province}, `}
+                {address.country_code?.toUpperCase()}
+              </span>
+            </div>
           </div>
+          <X className="cursor-pointer" onClick={() => removeAddress()} />
         </div>
-        <div className="flex items-center gap-x-4">
-          <button
-            className="text-small-regular text-gray-700 flex items-center gap-x-2"
-            onClick={open}
-          >
-            <Edit size={16} />
-            Edit
-          </button>
-          <button
-            className="text-small-regular text-gray-700 flex items-center gap-x-2"
-            onClick={removeAddress}
-          >
-            <Trash />
-            Remove
-          </button>
-        </div>
+        <button
+          className="underline uppercase tracking-wide flex items-start"
+          onClick={open}
+        >
+          Edit
+        </button>
       </div>
-
       <Modal isOpen={state} close={close}>
         <Modal.Title>Edit address</Modal.Title>
         <Modal.Body>
           <div className="grid grid-cols-1 gap-y-2">
-            <div className="grid grid-cols-2 gap-x-2">
+            <div>
+              <label className="font-light text-[14px]">First Name *</label>
               <Input
                 label="First name"
                 {...register("first_name", {
@@ -159,8 +154,11 @@ const EditAddress: React.FC<EditAddressProps> = ({
                 })}
                 required
                 errors={errors}
-                autoComplete="given-name"
+                placeholder="First Name"
               />
+            </div>
+            <div>
+              <label className="font-light text-[14px]">Last Name *</label>
               <Input
                 label="Last name"
                 {...register("last_name", {
@@ -168,26 +166,36 @@ const EditAddress: React.FC<EditAddressProps> = ({
                 })}
                 required
                 errors={errors}
-                autoComplete="family-name"
+                placeholder="Last Name"
               />
             </div>
-            <Input label="Company" {...register("company")} errors={errors} />
-            <Input
-              label="Address"
-              {...register("address_1", {
-                required: "Address is required",
-              })}
-              required
-              errors={errors}
-              autoComplete="address-line1"
-            />
-            <Input
-              label="Apartment, suite, etc."
-              {...register("address_2")}
-              errors={errors}
-              autoComplete="address-line2"
-            />
-            <div className="grid grid-cols-[144px_1fr] gap-x-2">
+            {/* <div>
+              <label className="font-light text-[14px]">Last Name *</label>
+              <Input label="Company" {...register("company")} errors={errors} />
+            </div> */}
+            <div>
+              <label className="font-light text-[14px]">Address 1 *</label>
+              <Input
+                label="Address"
+                {...register("address_1", {
+                  required: "Address is required",
+                })}
+                required
+                errors={errors}
+                placeholder="Address 1"
+              />
+            </div>
+            <div>
+              <label className="font-light text-[14px]">Address 2</label>
+              <Input
+                label="Apartment, suite, etc."
+                {...register("address_2")}
+                errors={errors}
+                placeholder="Address 2"
+              />
+            </div>
+            <div>
+              <label className="font-light text-[14px]">Postal Code *</label>
               <Input
                 label="Postal code"
                 {...register("postal_code", {
@@ -195,8 +203,11 @@ const EditAddress: React.FC<EditAddressProps> = ({
                 })}
                 required
                 errors={errors}
-                autoComplete="postal-code"
+                placeholder="Postal Code"
               />
+            </div>
+            <div>
+              <label className="font-light text-[14px]">City *</label>
               <Input
                 label="City"
                 {...register("city", {
@@ -204,38 +215,54 @@ const EditAddress: React.FC<EditAddressProps> = ({
                 })}
                 errors={errors}
                 required
-                autoComplete="locality"
+                placeholder="City"
               />
             </div>
-            <Input
-              label="Province / State"
-              {...register("province")}
-              errors={errors}
-              autoComplete="address-level1"
-            />
-            <CountrySelect
-              {...register("country_code", { required: true })}
-              autoComplete="country"
-            />
-            <Input
-              label="Phone"
-              {...register("phone")}
-              errors={errors}
-              autoComplete="phone"
-            />
+            <div>
+              <label className="font-light text-[14px]">State *</label>
+              <Input
+                label="Province / State"
+                {...register("province")}
+                errors={errors}
+                placeholder="State"
+              />
+            </div>
+            <div>
+              <label className="font-light text-[14px]">Country *</label>
+              <CountrySelect
+                {...register("country_code", { required: true })}
+                placeholder="Country"
+              />
+            </div>
+            <div>
+              <label className="font-light text-[14px]">Phone *</label>
+              <Input
+                label="Phone"
+                {...register("phone", {
+                  pattern: phoneRegex,
+                })}
+                errors={errors}
+                placeholder="Phone"
+              />
+            </div>
           </div>
           {error && (
             <div className="text-rose-500 text-small-regular py-2">{error}</div>
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={close}>
-            Cancel
-          </Button>
-          <Button onClick={submit} disabled={submitting}>
-            Save
-            {submitting && <Spinner />}
-          </Button>
+          <div className="mt-5 flex flex-row gap-4">
+            <Button
+              className="!bg-gray-200 !text-gray-900 !border-gray-200 min-h-0"
+              onClick={close}
+            >
+              Cancel
+            </Button>
+            <Button className="min-h-0" onClick={submit} disabled={submitting}>
+              Save
+              {submitting && <Spinner />}
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </>

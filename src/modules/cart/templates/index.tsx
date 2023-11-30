@@ -1,5 +1,4 @@
 "use client"
-
 import useEnrichedLineItems from "@lib/hooks/use-enrich-line-items"
 import DiscountCode from "@modules/checkout/components/discount-code"
 import SkeletonCartPage from "@modules/skeletons/templates/skeleton-cart-page"
@@ -8,6 +7,8 @@ import EmptyCartMessage from "../components/empty-cart-message"
 import SignInPrompt from "../components/sign-in-prompt"
 import ItemsTemplate from "./items"
 import Summary from "./summary"
+import Breadcrumbs from "@modules/common/components/breadcrumbs"
+import Newsletter from "@modules/common/components/newsletter"
 
 const CartTemplate = () => {
   const { cart } = useCart()
@@ -19,37 +20,41 @@ const CartTemplate = () => {
   }
 
   return (
-    <div className="bg-gray-50 py-12">
-      <div className="content-container">
-        {cart.items.length ? (
-          <div className="grid grid-cols-1 small:grid-cols-[1fr_360px] gap-x-8">
-            <div className="flex flex-col bg-white p-6 gap-y-6">
-              {!customer && <SignInPrompt />}
-              <ItemsTemplate region={cart?.region} items={items} />
-            </div>
-            <div className="relative">
-              <div className="flex flex-col gap-y-8 sticky top-12">
-                {cart && cart.region && (
-                  <>
-                    <div className="bg-white p-6">
-                      <Summary cart={cart} />
-                    </div>
-                    <div className="bg-white p-6">
-                      <DiscountCode cart={cart} />
-                    </div>
-                  </>
-                )}
+    <>
+      <Breadcrumbs path={"Domov / Cart"} />
+      <div className="py-14">
+        <div className="small:content-container content-container-mobile medium:content-container">
+          {cart.items.length ? (
+            <div className="grid grid-cols-1 small:grid-cols-12 gap-8">
+              <div className="flex flex-col bg-white p-6 gap-y-6 border-[1px] border-gray-200 small:col-span-8">
+                {!customer && <SignInPrompt />}
+                <ItemsTemplate region={cart?.region} items={items} />
+              </div>
+              <div className="small:col-span-4">
+                <div className="flex flex-col gap-y-8 sticky top-12">
+                  {cart && cart.region && (
+                    <>
+                      <div className="bg-white p-6 border-[1px] border-gray-200">
+                        <Summary cart={cart} />
+                      </div>
+                      <div className="bg-white p-6 border-[1px] border-gray-200">
+                        <DiscountCode cart={cart} />
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div>
-            {!customer && <SignInPrompt />}
-            <EmptyCartMessage />
-          </div>
-        )}
+          ) : (
+            <div>
+              {!customer && <SignInPrompt />}
+              <EmptyCartMessage />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      <Newsletter/>
+    </>
   )
 }
 

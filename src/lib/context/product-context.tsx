@@ -18,6 +18,7 @@ import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
 interface ProductContext {
   formattedPrice: string
   quantity: number
+  maxQuantity: number
   disabled: boolean
   inStock: boolean
   variant?: Variant
@@ -129,10 +130,9 @@ export const ProductProvider = ({
       })
     }
   }
+  const maxQuantity = variant?.inventory_quantity || 0
 
   const increaseQuantity = () => {
-    const maxQuantity = variant?.inventory_quantity || 0
-
     if (maxQuantity > quantity + 1) {
       setQuantity(quantity + 1)
     } else {
@@ -154,6 +154,7 @@ export const ProductProvider = ({
     <ProductActionContext.Provider
       value={{
         quantity,
+        maxQuantity,
         maxQuantityMet,
         disabled,
         inStock,

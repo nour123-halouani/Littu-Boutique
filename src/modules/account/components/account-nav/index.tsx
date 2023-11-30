@@ -9,57 +9,39 @@ const AccountNav = () => {
   const { handleLogout } = useAccount()
 
   return (
-    <div>
-      <div className="small:hidden">
-        {route !== "/account" && (
-          <Link
-            href="/account"
-            className="flex items-center gap-x-2 text-small-regular py-2"
-          >
-            <>
-              <ChevronDown className="transform rotate-90" />
-              <span>Account</span>
-            </>
-          </Link>
-        )}
-      </div>
-      <div className="hidden small:block">
-        <div>
-          <div className="py-4">
-            <h3 className="text-base-semi">Account</h3>
-          </div>
-          <div className="text-base-regular">
-            <ul className="flex mb-0 justify-start items-start flex-col gap-y-4">
-              <li>
-                <AccountNavLink href="/account" route={route!}>
-                  Overview
-                </AccountNavLink>
-              </li>
-              <li>
-                <AccountNavLink href="/account/profile" route={route!}>
-                  Profile
-                </AccountNavLink>
-              </li>
-              <li>
-                <AccountNavLink href="/account/addresses" route={route!}>
-                  Addresses
-                </AccountNavLink>
-              </li>
-              <li>
-                <AccountNavLink href="/account/orders" route={route!}>
-                  Orders
-                </AccountNavLink>
-              </li>
-              <li className="text-grey-700">
-                <button type="button" onClick={handleLogout}>
-                  Log out
-                </button>
-              </li>
-            </ul>
-          </div>
+        <div className="uppercase tracking-wider mb-2 text-[13px] font-light mt-14">
+          <ul className="flex mb-0 justify-start items-start flex-col gap-y-4">
+            <li>
+              <AccountNavLink href="/account" route={route!}>
+                Overview
+              </AccountNavLink>
+            </li>
+            <li>
+              <AccountNavLink href="/account/profile" route={route!}>
+                Profile
+              </AccountNavLink>
+            </li>
+            <li>
+              <AccountNavLink href="/account/addresses" route={route!}>
+                Addresses
+              </AccountNavLink>
+            </li>
+            <li>
+              <AccountNavLink href="/account/orders" route={route!}>
+                Orders
+              </AccountNavLink>
+            </li>
+            <li>
+              <button
+                type="button"
+                className="uppercase tracking-wider mb-2 text-[13px] font-light underline hover:font-semibold"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
+            </li>
+          </ul>
         </div>
-      </div>
-    </div>
   )
 }
 

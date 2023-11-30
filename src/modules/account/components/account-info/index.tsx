@@ -40,12 +40,12 @@ const AccountInfo = ({
 
   return (
     <div className="text-small-regular">
-      <div className="flex items-end justify-between">
+      <div className="flex items-end justify-between gap-3">
         <div className="flex flex-col">
-          <span className="uppercase text-gray-700">{label}</span>
-          <div className="flex items-center flex-1 basis-0 justify-end gap-x-4">
+          <span className="uppercase tracking-wider text-[14px]">{label}</span>
+          <div className="flex items-center flex-1 basis-0 justify-end">
             {typeof currentInfo === "string" ? (
-              <span className="font-semibold">{currentInfo}</span>
+              <span className="font-light text-[12px]">{currentInfo}</span>
             ) : (
               currentInfo
             )}
@@ -53,7 +53,6 @@ const AccountInfo = ({
         </div>
         <div>
           <Button
-            variant="secondary"
             className="w-[100px] min-h-[25px] py-1"
             onClick={handleToggle}
             type={state ? "reset" : "button"}
@@ -75,7 +74,7 @@ const AccountInfo = ({
             }
           )}
         >
-          <div className="bg-green-100 text-green-500 p-4 my-4">
+          <div className="bg-theme-light text-typography p-4 my-4">
             <span>{label} updated succesfully</span>
           </div>
         </Disclosure.Panel>
@@ -93,7 +92,7 @@ const AccountInfo = ({
             }
           )}
         >
-          <div className="bg-rose-100 text-rose-500 p-4 mt-4">
+          <div className="bg-theme-light text-typography p-4 mt-4">
             <span>{errorMessage}</span>
           </div>
         </Disclosure.Panel>

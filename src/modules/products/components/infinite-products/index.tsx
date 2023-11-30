@@ -49,7 +49,6 @@ const InfiniteProducts = ({ params }: InfiniteProductsType) => {
     if (inView && hasNextPage) {
       fetchNextPage()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, hasNextPage])
 
   return (

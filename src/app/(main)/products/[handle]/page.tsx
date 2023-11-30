@@ -31,7 +31,6 @@ export default async function CollectionPage({ params }: Props) {
   const { products } = await getProductByHandle(params.handle).catch((err) => {
     notFound()
   })
-  console.log("product 1", products, products[0])
 
   return <ProductTemplate product={products[0]} />
 }

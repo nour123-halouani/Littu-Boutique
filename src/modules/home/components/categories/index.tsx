@@ -29,7 +29,7 @@ const Categories = () => {
           <div className="group relative overflow-hidden">
             <Image
               src={slide.image}
-              loading="lazy"
+              priority
               alt={`slider${index + 1}`}
               className="w-full object-cover 
               h-[55vh] 

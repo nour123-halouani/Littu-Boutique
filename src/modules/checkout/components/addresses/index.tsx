@@ -1,6 +1,6 @@
 import { useCheckout } from "@lib/context/checkout-context"
 import Button from "@modules/common/components/button-black"
-import Checkbox from "@modules/common/components/checkbox"
+import "../../../../styles/common/customCheckbox.css"
 import Spinner from "@modules/common/icons/spinner"
 import BillingAddress from "../billing_address"
 import ShippingAddress from "../shipping-address"
@@ -15,29 +15,33 @@ const Addresses = () => {
   } = useCheckout()
   return (
     <div className="bg-white">
-      <div className="text-xl-semi flex items-center gap-x-4 px-8 pb-6 pt-8">
-        <div className="bg-gray-900 w-8 h-8 rounded-full text-white flex justify-center items-center text-sm">
-          1
-        </div>
-        <h2>Shipping address</h2>
+      <div className="flex items-center gap-x-4 px-9 pb-6 pt-9">
+        <div className="xsmall:text-[28px] text-[20px] font-medium">1</div>
+        <h2 className="xsmall:text-[25px] text-[20px] tracking-wider font-normal uppercase">
+          Shipping address
+        </h2>
       </div>
       {isEdit ? (
         <div className="px-8 pb-8">
           <ShippingAddress />
           <div className="mt-6">
-            <Checkbox
-              label="Same as billing address"
-              checked={checked}
-              onChange={onChange}
-            />
+            <label className="inline-flex items-center mt-4 container cursor-pointer">
+              <span className="text-theme-dark font-light tracking-[0.18px] text-[13px] xsmall:text-[15px] mt-[-2.5px] xsmall:mt-[-2px]">
+                Same as billing address
+              </span>
+              <input type="checkbox" checked={checked} onChange={onChange} />
+              <span className="checkmark"></span>
+            </label>
           </div>
           {!checked && (
             <div>
-              <div className="text-xl-semi flex items-center gap-x-4 pb-6 pt-8">
-                <div className="bg-gray-900 w-8 h-8 rounded-full text-white flex justify-center items-center font-mono text-sm">
+              <div className="flex items-center gap-x-4 pl-1 pb-6 pt-9">
+                <div className="xsmall:text-[28px] text-[20px] font-medium">
                   2
                 </div>
-                <h2>Billing address</h2>
+                <h2 className="xsmall:text-[25px] text-[20px] tracking-wider font-normal uppercase">
+                  Billing address
+                </h2>
               </div>
               <BillingAddress />
             </div>
@@ -51,12 +55,9 @@ const Addresses = () => {
         </div>
       ) : (
         <div>
-          <div className="bg-gray-50 px-8 py-6 text-small-regular">
+          <div className="bg-theme-light px-8 py-6 text-small-regular">
             {cart && cart.shipping_address ? (
               <div className="flex items-start gap-x-8">
-                <div className="bg-green-400 rounded-full min-w-[24px] h-6 flex items-center justify-center text-white text-small-regular">
-                  ✓
-                </div>
                 <div className="flex items-start justify-between w-full">
                   <div className="flex flex-col">
                     <span>
@@ -79,16 +80,11 @@ const Addresses = () => {
                       <span>{cart.email}</span>
                     </div>
                     {checked && (
-                      <div className="flex items-center gap-x-2 mt-6">
-                        <div className="flex items-center justify-center border border-gray-700 bg-gray-100 w-4 h-4">
-                          ✓
-                        </div>
-                        <span>Same as billing address</span>
-                      </div>
+                        <span className="font-semibold text-[12px] tracking-wider mt-5 uppercase">Same as billing address</span>
                     )}
                   </div>
                   <div>
-                    <button onClick={setEdit}>Edit</button>
+                    <button className="underline uppercase tracking-wide" onClick={setEdit}>Edit</button>
                   </div>
                 </div>
               </div>
@@ -100,18 +96,17 @@ const Addresses = () => {
           </div>
           {!checked && (
             <div>
-              <div className="text-xl-semi flex items-center gap-x-4 px-8 pb-6 pt-8">
-                <div className="bg-gray-900 w-8 h-8 rounded-full text-white flex justify-center items-center font-mono text-sm">
+              <div className="flex items-center gap-x-4 px-9 pb-6 pt-9">
+                <div className="xsmall:text-[25px] text-[20px] font-medium">
                   2
                 </div>
-                <h2>Billing address</h2>
+                <h2 className="xsmall:text-[25px] text-[20px] tracking-wider font-normal uppercase">
+                  Billing address
+                </h2>
               </div>
-              <div className="bg-gray-50 px-8 py-6 text-small-regular">
+              <div className="bg-theme-light px-8 py-6 text-small-regular">
                 {cart && cart.billing_address ? (
                   <div className="flex items-start gap-x-8">
-                    <div className="bg-green-400 rounded-full min-w-[24px] h-6 flex items-center justify-center text-white text-small-regular">
-                      ✓
-                    </div>
                     <div className="flex items-start justify-between w-full">
                       <div className="flex flex-col">
                         <span>
@@ -135,7 +130,7 @@ const Addresses = () => {
                         </div>
                       </div>
                       <div>
-                        <button onClick={setEdit}>Edit</button>
+                      <button className="underline uppercase tracking-wide" onClick={setEdit}>Edit</button>
                       </div>
                     </div>
                   </div>

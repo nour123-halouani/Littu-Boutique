@@ -1,9 +1,9 @@
 import clsx from "clsx"
-import Link from "next/link"
 import { ProductPreviewType } from "types/global"
 import Thumbnail from "../thumbnail"
 
 const ProductPreview = ({
+  id,
   title,
   handle,
   thumbnail,
@@ -11,7 +11,12 @@ const ProductPreview = ({
 }: ProductPreviewType) => {
   return (
     <div>
-      <Thumbnail thumbnail={thumbnail} size="full" link={`/products/${handle}`}/>
+      <Thumbnail
+        thumbnail={thumbnail}
+        id={id}
+        size="full"
+        link={`/products/${handle}`}
+      />
       <div className="leading-6 uppercase mt-2 tracking-[0.8px] small:text-[15px]">
         <span>{title}</span>
         <div className="flex items-center gap-x-2 mt-[-5px]">
@@ -27,8 +32,7 @@ const ProductPreview = ({
                   "text-rose-500": price.price_type === "sale",
                 })}
               >
-                {/* {price.calculated_price} */}
-                95,00€{" "}
+                {price.calculated_price}
               </span>
             </>
           ) : (

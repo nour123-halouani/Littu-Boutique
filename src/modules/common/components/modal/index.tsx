@@ -66,8 +66,8 @@ const Title: React.FC = ({ children }) => {
   const { close } = useModal()
 
   return (
-    <Dialog.Title className="flex items-center justify-between">
-      <div className="text-large-semi">{children}</div>
+    <Dialog.Title className="flex items-center justify-between mb-6">
+      <div className="text-medium tracking-wide uppercase">{children}</div>
       <div>
         <button onClick={close}>
           <X size={20} />

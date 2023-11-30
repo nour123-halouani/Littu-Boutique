@@ -1,3 +1,4 @@
+"use client"
 import { Popover, Transition } from "@headlessui/react"
 import { useCartDropdown } from "@lib/context/cart-dropdown-context"
 import { useStore } from "@lib/context/store-context"
@@ -21,10 +22,9 @@ const CartDropdown = () => {
     <div className="h-full z-50" onMouseEnter={open} onMouseLeave={close}>
       <Popover className="relative h-full">
         <Popover.Button className="h-full">
-          <Link
-            className="uppercase tracking-[1.4px]"
-            href="/cart"
-          >{`Cart (${totalItems})`}</Link>
+          <Link className="uppercase tracking-[1.4px]" href="/cart">
+            {`Cart (${totalItems})`}
+          </Link>
         </Popover.Button>
         <Transition
           show={state}
@@ -38,10 +38,12 @@ const CartDropdown = () => {
         >
           <Popover.Panel
             static
-            className="hidden small:block absolute top-[calc(100%+1px)] right-0 bg-white border-x border-b border-gray-200 w-[382px] text-gray-900"
+            className="mt-[20px] hidden small:block absolute top-[calc(100%+1px)] right-0 bg-white border-x border-b border-gray-200 w-[382px] text-gray-900"
           >
             <div className="p-4 flex items-center justify-center">
-              <h3 className="text-large-semi">Shopping Bag</h3>
+              <h3 className="uppercase font-medium text-lg tracking-wider">
+                Shopping Bag
+              </h3>
             </div>
             {cart && items?.length ? (
               <>
@@ -56,22 +58,25 @@ const CartDropdown = () => {
                         key={item.id}
                       >
                         <div className="w-[122px]">
-                          <Thumbnail thumbnail={item.thumbnail} size="full" />
+                          <Thumbnail
+                            thumbnail={item.thumbnail}
+                            size="full"
+                            inCard={true}
+                            id={item.id}
+                          />
                         </div>
                         <div className="flex flex-col justify-between flex-1">
                           <div className="flex flex-col flex-1">
                             <div className="flex items-start justify-between">
                               <div>
-                                <h3 className="text-base-regular overflow-ellipsis overflow-hidden whitespace-nowrap mr-4 w-[130px]">
-                                  <Link
-                                    href={`/products/${item.variant.product.handle}`}
-                                    legacyBehavior
-                                  >
-                                    {item.title}
-                                  </Link>
-                                </h3>
+                                <Link
+                                  className="uppercase hover:underline text-[14px] cursor-pointer tracking-wider font-normal"
+                                  href={`/products/${item.variant.product.handle}`}
+                                >
+                                  {item.title}
+                                </Link>
                                 <LineItemOptions variant={item.variant} />
-                                <span>Quantity: {item.quantity}</span>
+                                <span><span className="font-medium">Quantity :</span> {item.quantity}</span>
                               </div>
                               <div className="flex justify-end">
                                 <LineItemPrice
@@ -97,13 +102,13 @@ const CartDropdown = () => {
                       </div>
                     ))}
                 </div>
-                <div className="p-4 flex flex-col gap-y-4 text-small-regular">
+                <div className="p-4 flex flex-col gap-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-700 font-semibold">
+                    <span className="text-gray-700 font-semibold uppercase">
                       Subtotal{" "}
                       <span className="font-normal">(incl. taxes)</span>
                     </span>
-                    <span className="text-large-semi">
+                    <span className="tracking-[0.72px] font-medium text-[16px]">
                       {formatAmount({
                         amount: cart.subtotal || 0,
                         region: cart.region,
@@ -122,9 +127,9 @@ const CartDropdown = () => {
                   <div className="bg-gray-900 text-small-regular flex items-center justify-center w-6 h-6 rounded-full text-white">
                     <span>0</span>
                   </div>
-                  <span>Your shopping bag is empty.</span>
+                  <span className="uppercase">Your shopping bag is empty.</span>
                   <div>
-                    <Link href="/store">
+                    <Link href="/">
                       <>
                         <span className="sr-only">Go to all products page</span>
                         <Button onClick={close}>Explore products</Button>

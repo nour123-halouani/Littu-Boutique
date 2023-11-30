@@ -15,15 +15,15 @@ const CheckoutForm = () => {
   return (
     <div>
       <div className="w-full grid grid-cols-1 gap-y-8">
-        <div>
+        <div className="border-[1px] border-gray-200">
           <Addresses />
         </div>
 
-        <div>
+        <div className="border-[1px] border-gray-200">
           <Shipping cart={cart} />
         </div>
 
-        <div>
+        <div className="border-[1px] border-gray-200">
           <Payment />
         </div>
       </div>

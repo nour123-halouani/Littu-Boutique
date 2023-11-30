@@ -12,10 +12,6 @@ const Payment = () => {
     sameAsBilling: { state: isSame },
   } = useCheckout()
 
-  /**
-   * Fallback if the payment session are not loaded properly we
-   * retry to load them after a 5 second delay.
-   */
   useEffect(() => {
     let timeout: NodeJS.Timeout | null = null
 
@@ -30,7 +26,6 @@ const Payment = () => {
         clearTimeout(timeout)
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart])
 
   return (
@@ -38,7 +33,7 @@ const Payment = () => {
       title="Payment"
       index={isSame ? 3 : 4}
       closedState={
-        <div className="px-8 pb-8 text-small-regular">
+        <div className="px-8 pb-8 font-light text-[14px] tracking-wide">
           <p>Enter your address to see available payment options.</p>
         </div>
       }

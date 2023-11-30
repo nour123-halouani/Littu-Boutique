@@ -74,8 +74,8 @@ const Hero = () => {
               <div className="relative">
                 <Image
                   src={slide.image}
-                  loading="lazy"
                   alt={`slider${index + 1}`}
+                  priority
                   className="max-h-[700px] w-[100vw] h-[100vh] object-fill"
                 />
                 <div className="absolute inset-0 grid grid-cols-2">
@@ -137,7 +137,7 @@ const Hero = () => {
               <div key={index} className="keen-slider__slide">
                 <Image
                   src={slide.image}
-                  loading="lazy"
+                  priority
                   alt={`slider${index + 1}`}
                   className="max-h-[700px] w-[100%] h-[60vh] object-fill"
                 />
