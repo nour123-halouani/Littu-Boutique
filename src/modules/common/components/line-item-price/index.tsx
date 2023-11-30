@@ -20,9 +20,9 @@ const LineItemPrice = ({
   const hasReducedPrice = (item.total || 0) < originalPrice
 
   return (
-    <div className="flex flex-col text-gray-700 text-right">
+    <div className="flex flex-col text-gray-700">
       <span
-        className={clsx("text-base-regular", {
+        className={clsx("tracking-[0.72px] font-medium text-[16px]", {
           "text-rose-600": hasReducedPrice,
         })}
       >

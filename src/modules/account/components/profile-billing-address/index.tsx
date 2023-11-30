@@ -6,6 +6,8 @@ import { useRegions, useUpdateMe } from "medusa-react"
 import React, { useEffect, useMemo } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import AccountInfo from "../account-info"
+import { emailRegex, phoneRegex } from "@lib/util/regex"
+import CountrySelect from "@modules/checkout/components/country-select"
 
 type MyInformationProps = {
   customer: Omit<Customer, "password_hash">
@@ -63,7 +65,7 @@ const ProfileBillingAddress: React.FC<MyInformationProps> = ({ customer }) => {
   const [
     firstName,
     lastName,
-    company,
+    // company,
     address1,
     address2,
     city,
@@ -75,7 +77,7 @@ const ProfileBillingAddress: React.FC<MyInformationProps> = ({ customer }) => {
     name: [
       "billing_address.first_name",
       "billing_address.last_name",
-      "billing_address.company",
+      // "billing_address.company",
       "billing_address.address_1",
       "billing_address.address_2",
       "billing_address.city",
@@ -110,24 +112,24 @@ const ProfileBillingAddress: React.FC<MyInformationProps> = ({ customer }) => {
       )?.label || customer.billing_address.country_code?.toUpperCase()
 
     return (
-      <div className="flex flex-col font-semibold">
-        <span>
-          {customer.billing_address.first_name}{" "}
+      <ul className="flex flex-col font-light">
+        <li>
+          {customer.billing_address.first_name}
           {customer.billing_address.last_name}
-        </span>
-        <span>{customer.billing_address.company}</span>
-        <span>
+        </li>
+        <li>{customer.billing_address.company}</li>
+        <li>
           {customer.billing_address.address_1}
           {customer.billing_address.address_2
             ? `, ${customer.billing_address.address_2}`
             : ""}
-        </span>
-        <span>
-          {customer.billing_address.postal_code},{" "}
+        </li>
+        <li>
+          {customer.billing_address.postal_code},
           {customer.billing_address.city}
-        </span>
-        <span>{country}</span>
-      </div>
+        </li>
+        <li>{country}</li>
+      </ul>
     )
   }, [customer, regionOptions])
 
@@ -145,74 +147,106 @@ const ProfileBillingAddress: React.FC<MyInformationProps> = ({ customer }) => {
         isError={isError}
         clearState={clearState}
       >
-        <div className="grid grid-cols-1 gap-y-2">
-          <div className="grid grid-cols-2 gap-x-2">
-            <Input
-              label="First name"
-              {...register("billing_address.first_name", {
-                required: true,
-              })}
-              defaultValue={firstName}
-              errors={errors}
-            />
-            <Input
-              label="Last name"
-              {...register("billing_address.last_name", { required: true })}
-              defaultValue={lastName}
-              errors={errors}
-            />
+        <div className="grid grid-cols-1 gap-y-4">
+          <div className="grid xsmall:grid-cols-2 grid-cols-1 gap-4">
+            <div>
+              <label className="font-light text-[14px]">First Name*</label>
+              <Input
+                label="First name"
+                {...register("billing_address.first_name", {
+                  required: "First name is required",
+                })}
+                errors={errors}
+                placeholder="First Name"
+                defaultValue={firstName}
+              />
+            </div>
+            <div>
+              <label className="font-light text-[14px]">Last Name *</label>
+              <Input
+                label="Last name"
+                {...register("billing_address.last_name", {
+                  required: "Last name is required",
+                })}
+                errors={errors}
+                placeholder="Last Name"
+                defaultValue={lastName}
+              />
+            </div>
           </div>
-          <Input
-            label="Company"
-            {...register("billing_address.company")}
-            defaultValue={company}
-            errors={errors}
-          />
-          <Input
-            label="Address"
-            {...register("billing_address.address_1", { required: true })}
-            defaultValue={address1}
-            errors={errors}
-          />
-          <Input
-            label="Apartment, suite, etc."
-            {...register("billing_address.address_2")}
-            defaultValue={address2}
-            errors={errors}
-          />
-          <div className="grid grid-cols-[144px_1fr] gap-x-2">
-            <Input
-              label="Postal code"
-              {...register("billing_address.postal_code", { required: true })}
-              defaultValue={postalCode}
-              errors={errors}
-            />
-            <Input
-              label="City"
-              {...register("billing_address.city", { required: true })}
-              defaultValue={city}
-              errors={errors}
-            />
+          <div className="grid xsmall:grid-cols-2 grid-cols-1 gap-4">
+            <div>
+              <label className="font-light text-[14px]">Address 1 *</label>
+              <Input
+                label="Address"
+                {...register("billing_address.address_1", { required: true })}
+                errors={errors}
+                placeholder="Address 1"
+                defaultValue={address1}
+              />
+            </div>
+            <div>
+              <label className="font-light text-[14px]">Address 2</label>
+              <Input
+                label="Apartments, suite, etc."
+                {...register("billing_address.address_2")}
+                errors={errors}
+                placeholder="Address 2"
+                defaultValue={address2}
+              />
+            </div>
           </div>
-          <Input
-            label="Province"
-            {...register("billing_address.province")}
-            defaultValue={province}
-            errors={errors}
-          />
-          <NativeSelect
-            {...register("billing_address.country_code", { required: true })}
-            defaultValue={countryCode}
-          >
-            <option value="">-</option>
-            {regionOptions.map((option, i) => {
-              return (
-                <option key={i} value={option.value}>
-                  {option.label}
-                </option>
-              )
-            })}
-          </NativeSelect>
+          <div className="grid xsmall:grid-cols-2 grid-cols-1 gap-4">
+            <div>
+              <label className="font-light text-[14px]">Country *</label>
+              <CountrySelect
+                {...register("billing_address.country_code", {
+                  required: "Country is required",
+                })}
+                errors={errors}
+                placeholder="Country"
+                defaultValue={countryCode}
+              />
+            </div>
+            <div>
+              <label className="font-light text-[14px]">State *</label>
+              <Input
+                label="State / Province"
+                {...register("billing_address.province", {
+                  required: "state is required",
+                })}
+                errors={errors}
+                placeholder="State"
+                defaultValue={province}
+              />
+            </div>
+          </div>
+          <div className="grid xsmall:grid-cols-[122px_1fr] grid-cols-1 gap-4">
+            <div>
+              <label className="font-light text-[14px]">Postal Code *</label>
+              <Input
+                label="Postal code"
+                {...register("billing_address.postal_code", {
+                  required: "Postal code is required",
+                })}
+                errors={errors}
+                placeholder="Postal Code"
+                defaultValue={postalCode}
+              />
+            </div>
+            <div>
+              <label className="font-light text-[14px]">City *</label>
+              <Input
+                label="City"
+                {...register("billing_address.city", {
+                  required: "City is required",
+                })}
+                errors={errors}
+                placeholder="City"
+                defaultValue={city}
+              />
+            </div>
+          </div>
         </div>
       </AccountInfo>
     </form>

@@ -4,40 +4,39 @@ import Link from "next/link"
 import CheckoutLoader from "../components/checkout-loader"
 import CheckoutForm from "./checkout-form"
 import CheckoutSummary from "./checkout-summary"
+import Logo from "@modules/common/icons/logo"
 
 const CheckoutTemplate = () => {
   return (
     <CheckoutProvider>
-      <div className="bg-gray-100 relative small:min-h-screen">
-        <div className="h-16 bg-white">
-          <nav className="flex items-center h-full justify-between content-container">
-            <Link
-              href="/cart"
-              className="text-small-semi text-gray-700 flex items-center gap-x-2 uppercase flex-1 basis-0"
-            >
-              <>
-                <ChevronDown className="rotate-90" size={16} />
-                <span className="mt-px hidden small:block">
-                  Back to shopping cart
-                </span>
-                <span className="mt-px block small:hidden">Back</span>
-              </>
-            </Link>
-            <Link href="/" className="text-xl-semi">
-              ACME
-            </Link>
-            <div className="flex-1 basis-0" />
-          </nav>
-        </div>
-        <div className="relative">
-          <CheckoutLoader />
-          <div className="grid grid-cols-1 small:grid-cols-[1fr_416px] gap-y-8 content-container gap-x-8 py-12">
+      <div className="h-16 sticky top-0 inset-x-0 z-50 group border-b-[1px] border-gray-200 small:content-container content-container-mobile medium:content-container">
+        <nav className="flex items-center h-full justify-between bg-white">
+          <Link
+            href="/cart"
+            className="flex items-center gap-x-2 flex-1 basis-0"
+          >
+            <div className="flex justify-center items-center gap-4">
+              <ChevronDown className="rotate-90" size={20} />
+              <span className="hidden small:flex uppercase text-[12px] tracking-wider">
+                Back to shopping cart
+              </span>
+            </div>
+          </Link>
+          <Link href="/">
+            <Logo size={60} />
+          </Link>
+          <div className="flex-1 basis-0" />
+        </nav>
+      </div>
+      <div className="small:content-container content-container-mobile medium:content-container">
+        <CheckoutLoader />
+        <div className="grid small:grid-cols-12 grid-cols-1 my-14 gap-8">
+          <div className="small:col-span-8">
             <CheckoutForm />
+          </div>
+          <div className="small:col-span-4">
             <CheckoutSummary />
           </div>
-        </div>
-        <div className="py-4 w-full flex items-center justify-center">
-          <MedusaCTA />
         </div>
       </div>
     </CheckoutProvider>

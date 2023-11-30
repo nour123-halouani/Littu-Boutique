@@ -88,6 +88,7 @@ const ProfileEmail: React.FC<MyInformationProps> = ({ customer }) => {
             })}
             defaultValue={email}
             errors={errors}
+            placeholder="Email"
           />
         </div>
       </AccountInfo>

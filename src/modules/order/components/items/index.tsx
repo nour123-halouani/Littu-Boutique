@@ -22,21 +22,19 @@ const Items = ({ items, region, cartId }: ItemsProps) => {
             return (
               <div className="grid grid-cols-[122px_1fr] gap-x-4" key={item.id}>
                 <div className="w-[122px]">
-                  <Thumbnail thumbnail={item.thumbnail} size="full" />
+                  <Thumbnail thumbnail={item.thumbnail} size="full" id={item.id} />
                 </div>
                 <div className="flex flex-col justify-between flex-1">
                   <div className="flex flex-col flex-1 text-small-regular">
-                    <div className="flex items-start justify-between">
+                    <div className="flex items-start xsmall:justify-between xsmall:flex-row flex-col gap-y-5">
                       <div>
-                        <h3 className="text-base-regular overflow-ellipsis overflow-hidden whitespace-nowrap mr-4">
-                          <Link
+                          <Link className="uppercase hover:underline"
                             href={`/products/${item.variant.product.handle}`}
                           >
                             {item.title}
                           </Link>
-                        </h3>
                         <LineItemOptions variant={item.variant} />
-                        <span>Quantity: {item.quantity}</span>
+                        <span> <span className="font-medium">Quantity: </span>{item.quantity}</span>
                       </div>
                       <div className="flex justify-end">
                         <LineItemPrice region={region} item={item} />

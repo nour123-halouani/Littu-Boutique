@@ -7,9 +7,9 @@ import ChevronDown from "@modules/common/icons/chevron-down"
 import X from "@modules/common/icons/x"
 import clsx from "clsx"
 import React, { Fragment, useMemo } from "react"
-import { Product } from "types/medusa"
-import OptionSelect from "../option-select"
 import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
+import OptionSelectColor from "../option-select-color"
+import OptionSelectSize from "../option-select-size"
 
 type MobileActionsProps = {
   product: PricedProduct
@@ -125,19 +125,34 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
                   </div>
                   <div className="bg-white px-6 py-12">
                     {product.variants.length > 1 && (
-                      <div className="flex flex-col gap-y-6">
-                        {(product.options || []).map((option) => {
-                          return (
-                            <div key={option.id}>
-                              <OptionSelect
-                                option={option}
-                                current={options[option.id]}
-                                updateOption={updateOptions}
-                                title={option.title}
-                              />
-                            </div>
-                          )
-                        })}
+                      <div className="mt-2 flex flex-col gap-4">
+                        {(product.options || []).map(
+                          (option) =>
+                            option.title.toLowerCase() === "color" && (
+                              <div key={option.id}>
+                                <OptionSelectColor
+                                  option={option}
+                                  current={options[option.id]}
+                                  updateOption={updateOptions}
+                                  title={option.title}
+                                />
+                              </div>
+                            )
+                        )}
+
+                        {(product.options || []).map(
+                          (option) =>
+                            option.title.toLowerCase() === "size" && (
+                              <div key={option.id}>
+                                <OptionSelectSize
+                                  option={option}
+                                  current={options[option.id]}
+                                  updateOption={updateOptions}
+                                  title={option.title}
+                                />
+                              </div>
+                            )
+                        )}
                       </div>
                     )}
                   </div>

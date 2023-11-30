@@ -79,7 +79,7 @@ const ProfileName: React.FC<MyInformationProps> = ({ customer }) => {
         isError={isError}
         clearState={clearState}
       >
-        <div className="grid grid-cols-2 gap-x-4">
+        <div className="grid small:grid-cols-2 grid-cols-1 gap-4">
           <Input
             label="First name"
             {...register("first_name", {
@@ -87,12 +87,14 @@ const ProfileName: React.FC<MyInformationProps> = ({ customer }) => {
             })}
             defaultValue={firstName}
             errors={errors}
+            placeholder="First Name"
           />
           <Input
             label="Last name"
             {...register("last_name", { required: true })}
             defaultValue={lastName}
             errors={errors}
+            placeholder="Last Name"
           />
         </div>
       </AccountInfo>

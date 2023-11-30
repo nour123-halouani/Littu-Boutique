@@ -7,7 +7,6 @@ import RightButton from "@modules/common/icons/right-button"
 import { useFeaturedProductsQuery } from "@lib/hooks/use-layout-data"
 import ProductPreview from "@modules/products/components/product-preview"
 import Link from "next/link"
-import SkeletonProductPreview from "@modules/skeletons/components/skeleton-product-preview"
 
 const NewArrivals = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -66,7 +65,7 @@ const NewArrivals = () => {
           {currentSlide !== 0 ? (
             <div className="absolute top-1/2 transform -translate-y-1/2 left-4 cursor-pointer">
               <LeftButton
-                className="medium:ml-32 small:ml-16"
+                className="medium:ml-28 small:ml-16"
                 color="black"
                 size="22"
                 onClick={(e: any) =>

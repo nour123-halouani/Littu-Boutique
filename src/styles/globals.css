@@ -124,4 +124,8 @@
   .text-3xl-semi {
     @apply text-[36px] leading-[48px] font-semibold;
   }
+
+  button {
+    @apply bg-transparent border-none outline-none cursor-pointer;
+  }
 }

@@ -1,7 +1,5 @@
 "use client"
-
 import { useAccount } from "@lib/context/account-context"
-// import UnderlineLink from "@modules/common/components/underline-link"
 import Spinner from "@modules/common/icons/spinner"
 import React, { useEffect } from "react"
 import AccountNav from "../components/account-nav"
@@ -22,28 +20,12 @@ const AccountLayout: React.FC = ({ children }) => {
   }
 
   return (
-    <div className="flex-1 small:py-12 small:bg-gray-50">
-      <div className="flex-1 h-full max-w-5xl mx-auto bg-white flex flex-col">
-        <div className="grid grid-cols-1 small:grid-cols-[240px_1fr] small:px-8 py-6 small:py-12 ">
-          <div>
-            <AccountNav />
-          </div>
-          <div className="flex-1">{children}</div>
+    <div className="small:content-container content-container-mobile medium:content-container flex flex-col my-20">
+      <div className="grid grid-cols-1 small:grid-cols-12 small:px-8 py-6 small:py-12 border-[1px] border-gray-200 gap-16">
+        <div className="small:col-span-2 hidden small:block">
+          <AccountNav />
         </div>
-        <div className="flex flex-col small:flex-row items-end justify-between small:border-t border-gray-200 px-8 py-12 gap-x-8">
-          <div>
-            <h3 className="text-xl-semi mb-4">Got questions?</h3>
-            <span className="text-small-regular">
-              You can find frequently asked questions and answers on our
-              customer service page.
-            </span>
-          </div>
-          <div>
-            {/* <UnderlineLink href="/customer-service">
-              Customer Service
-            </UnderlineLink> */}
-          </div>
-        </div>
+        <div className="small:col-span-8 medium:col-span-10">{children}</div>
       </div>
     </div>
   )

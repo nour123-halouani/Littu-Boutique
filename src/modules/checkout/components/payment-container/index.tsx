@@ -3,7 +3,6 @@ import Radio from "@modules/common/components/radio"
 import clsx from "clsx"
 import React from "react"
 import PaymentStripe from "../payment-stripe"
-import PaymentTest from "../payment-test"
 
 type PaymentContainerProps = {
   paymentSession: PaymentSession
@@ -38,14 +37,7 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
   disabled = false,
 }) => {
   return (
-    <div
-      className={clsx(
-        "flex flex-col gap-y-4 border-b border-gray-200 last:border-b-0",
-        {
-          "bg-gray-50": selected,
-        }
-      )}
-    >
+    <div className="flex flex-col gap-y-4 border-b border-gray-200 last:border-b-0">
       <button
         className={"grid grid-cols-[12px_1fr] gap-x-4 py-4 px-8"}
         onClick={setSelected}
@@ -83,8 +75,7 @@ const PaymentElement = ({
         </div>
       )
     case "manual":
-      // We only display the test payment form if we are in a development environment
-      return process.env.NODE_ENV === "development" ? <PaymentTest /> : null
+      return process.env.NODE_ENV === "development" ? <></> : null
     default:
       return null
   }

@@ -80,6 +80,7 @@ const ProfilePhone: React.FC<MyInformationProps> = ({ customer }) => {
             })}
             defaultValue={phone}
             errors={errors}
+            placeholder="Phone"
           />
         </div>
       </AccountInfo>

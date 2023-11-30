@@ -63,7 +63,7 @@ const FooterNav = () => {
           </div>
           <div className=" text-[12px] flex flex-col">
             <Link
-              href="/"
+              href="/faq"
               className="uppercase hover:underline tracking-[0.8px]"
             >
               F.A.Q
@@ -81,7 +81,7 @@ const FooterNav = () => {
               privacy policy
             </Link>
             <Link
-              href="/"
+              href="/contact-us"
               className="uppercase hover:underline tracking-[0.8px]"
             >
               contact

@@ -8,7 +8,6 @@ import clsx from "clsx"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
-import WishlistList from "@modules/layout/components/wishlist-dropdown"
 import User from "@modules/common/icons/user"
 import AccountLogo from "@modules/common/icons/logo"
 import Search from "@modules/common/icons/search"
@@ -20,9 +19,20 @@ const Nav = () => {
   const [isHome, setIsHome] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(true)
+  const [isPathSlide, setIsPathSlide] = useState(false)
 
   useEffect(() => {
-    if (isHome) {
+    let pathSlide: string = pathname
+    pathname.startsWith("/products-list") ||
+    pathSlide === "/contact-us" ||
+    pathSlide === "/faq"
+      ? setIsPathSlide(true)
+      : setIsPathSlide(false)
+    pathname === "/" ? setIsHome(true) : setIsHome(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (isHome || isPathSlide) {
       const detectScrollY = () => {
         if (window.scrollY > 5) {
           setIsScrolled(true)
@@ -36,11 +46,7 @@ const Nav = () => {
         window.removeEventListener("scroll", detectScrollY)
       }
     }
-  }, [isHome])
-
-  useEffect(() => {
-    pathname === "/" ? setIsHome(true) : setIsHome(false)
-  }, [pathname])
+  }, [isHome, isPathSlide])
 
   const { toggle } = useMobileMenu()
 
@@ -48,34 +54,33 @@ const Nav = () => {
     setMenuOpen(!menuOpen)
   }, [toggle])
 
+  const storedArrayString = localStorage.getItem("wishlist")
+  let storedArray = JSON.parse(storedArrayString ? storedArrayString : "")
+  const arrayLength = storedArray.length
+
   return (
     <div
-      className={clsx("sticky top-0 inset-x-0 z-50 group ", {
-        "!fixed": isHome,
+      className={clsx("sticky top-0 inset-x-0 z-50 group", {
+        "!fixed": isHome || isPathSlide,
       })}
     >
       <header
-        className={clsx(
-          "relative h-[60px] small:px-8 px-3 py-1 mx-auto transition-colors small:bg-transparent duration-200 group-hover:bg-white group-hover:border-gray-200 ",
-          {
-            "!bg-white !border-b-[1px] border-gray-200": !isHome || isScrolled,
-          },
-          {
-            "border-b-[1px] border-gray-200 border-opacity-20":
-              isHome && !isScrolled,
+        className={`relative h-[60px] small:px-8 px-3 py-1 mx-auto transition-colors duration-200 small:group-hover:bg-white small:group-hover:border-gray-200 
+          ${
+            (isHome && !isScrolled) || (isPathSlide && !isScrolled)
+              ? "bg-transparent border-gray-200 border-opacity-20 border-b-[1px]"
+              : "bg-white border-b-[1px] border-gray-200"
           }
-        )}
+          `}
       >
         <nav
-          className={clsx(
-            "text-gray-900 small:grid small:grid-cols-3 small:gap-4 flex items-center justify-between w-full h-full text-small-regular transition-colors duration-200 font-light hover:font-normal",
-            {
-              "text-white group-hover:text-gray-900": isHome && !isScrolled,
-            },
-            {
-              "font-normal": isScrolled || !isHome,
-            }
-          )}
+          className={`text-gray-900 small:grid small:grid-cols-3 small:gap-4 flex items-center justify-between w-full h-full text-small-regular transition-colors duration-200 font-extralight hover:font-normal
+          ${
+            (isHome && !isScrolled) || (isPathSlide && !isScrolled)
+              ? "text-white group-hover:text-gray-900 font-light"
+              : "font-normal"
+          } 
+            `}
         >
           <div>
             <Link href="/">
@@ -103,7 +108,7 @@ const Nav = () => {
             </div>
             <div className="uppercase hover:underline tracking-[1.4px]">
               <Link
-                href="/"
+                href="/contact-us"
                 className="uppercase hover:underline tracking-[1.4px]"
               >
                 Contact
@@ -112,9 +117,12 @@ const Nav = () => {
           </div>
 
           <div className="hidden small:flex justify-end gap-[10px] medium:gap-7">
-            <div>
-              <WishlistList />
-            </div>
+            <Link
+              href="/wishlist"
+              className="uppercase tracking-[1.4px] cursor-pointer"
+            >
+              Wishlist ({arrayLength})
+            </Link>
             <div>
               <CartDropdown />
             </div>
@@ -128,6 +136,9 @@ const Nav = () => {
           <div className="small:hidden">
             <div className="flex flex-row gap-3 items-center">
               <Search size={35} color="black" />
+              <Link href="/account">
+                <User size={35} color="black" />
+              </Link>
               {!menuOpen ? (
                 <MenuIcon color="black" onClick={toggle} />
               ) : (

@@ -68,7 +68,7 @@ const BestSellers = () => {
           {currentSlide !== 0 ? (
             <div className="absolute top-1/2 transform -translate-y-1/2 left-4 cursor-pointer">
               <LeftButton
-                className="medium:ml-32 small:ml-16"
+                className="medium:ml-28 small:ml-16"
                 color="black"
                 size="22"
                 onClick={(e: any) =>

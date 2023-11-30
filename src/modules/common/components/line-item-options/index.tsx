@@ -12,7 +12,7 @@ const LineItemOptions = ({ variant }: LineItemOptionsProps) => {
         return (
           <div key={option.id}>
             <span>
-              {optionName}: {option.value}
+            <span className="font-medium"> {optionName} :</span> {option.value}
             </span>
           </div>
         )
